@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"io"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -70,4 +71,20 @@ func (page *ImageController) Show(c *gin.Context) {
 		return
 	}
 	helpers.Respond(c, 200, image, nil)
+}
+
+func (page *ImageController) Upload(c *gin.Context) {
+	file, handle, _ := c.Request.FormFile("file")
+	defer file.Close()
+	uploader := helpers.Upload{}
+	content, err := io.ReadAll(file)
+	if err != nil {
+		helpers.Respond(c, 500, "", err)
+		return
+	}
+	rawUrl, err := uploader.UploadFile(content, handle.Filename)
+	if err != nil {
+		helpers.Respond(c, 500, "", err)
+	}
+	helpers.Respond(c, 200, rawUrl, nil)
 }
