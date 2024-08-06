@@ -13,5 +13,9 @@ func (page *ImagePage) New(r *gin.Engine) {
 	group := r.Group("/image")
 	{
 		group.GET("", imageC.List)
+		group.POST("", imageC.Create)
+		group.GET("/:id", imageC.Show)
+		group.PUT("/:id", imageC.Update)
+		group.DELETE("/:id", imageC.Delete)
 	}
 }
