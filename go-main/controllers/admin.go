@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"log"
+
 	"github.com/gin-gonic/gin"
 	"rexai.com/helpers"
 )
@@ -8,13 +10,22 @@ import (
 type AdminController struct {
 }
 
-func (control *AdminController) Login(c *gin.Context) {
+type LoginFormParams struct {
+	Name     string `form:"name" json:"name" binding:"required"`
+	Password string `form:"password" json:"password" binding:"required"`
+}
 
-	name := c.PostForm("name")
-	password := c.PostForm("password")
+func (control *AdminController) Login(c *gin.Context) {
+	var payload LoginFormParams
+	err := c.BindJSON(&payload)
+	if err != nil {
+		helpers.Respond(c, 400, "参数错误", nil)
+		return
+	}
 	instance := helpers.GetAuthInstance()
-	if name != instance.GetName() || password != instance.GetSecret() {
-		helpers.Respond(c, 401, "", nil)
+	log.Println(payload.Name, payload.Password, instance)
+	if payload.Name != instance.GetName() || payload.Password != instance.GetSecret() {
+		helpers.Respond(c, 401, "密码和用户名不匹配", nil)
 		return
 	}
 

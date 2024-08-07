@@ -8,7 +8,7 @@ import (
 type AdminPage struct {
 }
 
-func (page *AdminPage) New(r *gin.Engine) {
+func (page *AdminPage) New(r *gin.RouterGroup) {
 	adminC := controllers.AdminController{}
 	group := r.Group("/admin")
 	{

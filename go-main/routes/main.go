@@ -8,5 +8,11 @@ type Router interface {
 
 func RegisterRoutes(r *gin.Engine) {
 	imgController := &ImagePage{}
-	imgController.New(r)
+	adminController := &AdminPage{}
+	api := r.Group("/api")
+	{
+		imgController.New(api)
+		adminController.New(api)
+	}
+
 }

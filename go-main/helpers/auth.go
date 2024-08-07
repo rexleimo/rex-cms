@@ -3,6 +3,7 @@ package helpers
 import (
 	"crypto/rand"
 	"encoding/hex"
+	"log"
 	"sync"
 )
 
@@ -33,6 +34,7 @@ func (h *AuthHelper) GeneratePassword() {
 		panic(err)
 	}
 	h.secret = hex.EncodeToString(key)
+	log.Println("admin password:", h.secret)
 }
 
 // 获取秘钥

@@ -1,11 +1,11 @@
 package utils
 
 import (
+	"bytes"
 	"image"
 	_ "image/gif"
 	_ "image/jpeg"
 	_ "image/png"
-	"mime/multipart"
 )
 
 type Image struct {
@@ -16,7 +16,7 @@ type ImageInfo struct {
 	Height int
 }
 
-func (u *Image) Decode(file multipart.File) (*ImageInfo, error) {
+func (u *Image) Decode(file *bytes.Reader) (*ImageInfo, error) {
 	img, _, err := image.Decode(file)
 	if err != nil {
 		return nil, err

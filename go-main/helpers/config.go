@@ -13,7 +13,7 @@ var (
 )
 
 type ConfigInstance struct {
-	config *Config
+	Config *Config
 }
 
 type Config struct {
@@ -34,7 +34,7 @@ func GetConfigInstance() *ConfigInstance {
 	return configInstance
 }
 
-func (config *ConfigInstance) New() {
+func (c *ConfigInstance) New() {
 	var contacts Config
 	data, err := os.ReadFile("config.toml")
 	if err != nil {
@@ -44,5 +44,5 @@ func (config *ConfigInstance) New() {
 	if err != nil {
 		panic(err)
 	}
-	config.config = &contacts
+	c.Config = &contacts
 }

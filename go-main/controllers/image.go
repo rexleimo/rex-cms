@@ -1,7 +1,10 @@
 package controllers
 
 import (
+	"bytes"
+	"fmt"
 	"io"
+	"path"
 	"strconv"
 	"time"
 
@@ -78,22 +81,30 @@ func (page *ImageController) Show(c *gin.Context) {
 func (page *ImageController) Upload(c *gin.Context) {
 	file, handle, _ := c.Request.FormFile("file")
 	defer file.Close()
+
 	uploader := helpers.Upload{}
 	content, err := io.ReadAll(file)
 	if err != nil {
-		helpers.Respond(c, 500, "", err)
+		helpers.Respond(c, 500, "读出文件失败", err)
 		return
-	}
-	rawUrl, err := uploader.UploadFile(content, handle.Filename)
-	if err != nil {
-		helpers.Respond(c, 500, "", err)
 	}
 
 	fileSize := handle.Size
 	imageHelper := &utils.Image{}
-	info, err := imageHelper.Decode(file)
+	info, err := imageHelper.Decode(bytes.NewReader(content))
 	if err != nil {
-		helpers.Respond(c, 500, "", err)
+		helpers.Respond(c, 500, "解析RawUrl失败", fmt.Errorf("解析RawUrl失败: %v", err))
+		return
+	}
+
+	fileNme := handle.Filename
+	suffix := path.Ext(fileNme)
+	newFileName := fmt.Sprintf("%d%s", time.Now().UnixNano(), suffix)
+
+	rawUrl, err := uploader.UploadFile(content, newFileName)
+	if err != nil {
+		helpers.Respond(c, 500, "上传图片到Github失败", fmt.Errorf("上传图片到Github失败: %v", err))
+		return
 	}
 
 	model := &models.Image{
