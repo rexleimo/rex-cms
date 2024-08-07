@@ -18,6 +18,9 @@ func (control *AdminController) Login(c *gin.Context) {
 		return
 	}
 
-	c.SetCookie("admin", "true", 3600, "/", "", false, true)
+	session := &helpers.SessionHelper{}
+	session.New(c)
+	session.Set("admin", "1")
+
 	helpers.Respond(c, 200, "", nil)
 }

@@ -3,7 +3,7 @@ package models
 import "time"
 
 type Image struct {
-	Id        int       `json:"id" bson:"_id,omitempty gorm:"primaryKey"`
+	Id        int       `json:"id" bson:"_id,omitempty" gorm:"primaryKey"`
 	URL       string    `json:"url" bson:"url,omitempty"`
 	Width     int       `json:"width" bson:"width,omitempty"`
 	Height    int       `json:"height" bson:"height,omitempty"`

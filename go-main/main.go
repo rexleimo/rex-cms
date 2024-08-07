@@ -10,6 +10,7 @@ func main() {
 	r := gin.Default()
 	helpers.GetDbInstance()
 	helpers.GetAuthInstance()
+	helpers.RegisterSession(r)
 	routes.RegisterRoutes(r)
 	r.Run()
 }

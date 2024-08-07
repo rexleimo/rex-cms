@@ -3,11 +3,13 @@ package controllers
 import (
 	"io"
 	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"rexai.com/helpers"
 	"rexai.com/models"
 	"rexai.com/services"
+	"rexai.com/utils"
 )
 
 var server *services.Image
@@ -86,5 +88,25 @@ func (page *ImageController) Upload(c *gin.Context) {
 	if err != nil {
 		helpers.Respond(c, 500, "", err)
 	}
-	helpers.Respond(c, 200, rawUrl, nil)
+
+	fileSize := handle.Size
+	imageHelper := &utils.Image{}
+	info, err := imageHelper.Decode(file)
+	if err != nil {
+		helpers.Respond(c, 500, "", err)
+	}
+
+	model := &models.Image{
+		URL:       rawUrl,
+		Width:     info.Width,
+		Height:    info.Height,
+		Size:      int(fileSize),
+		MimeType:  handle.Header.Get("Content-Type"),
+		CreateAt:  time.Now(),
+		UpdatedAt: time.Now(),
+	}
+
+	server.Create(model)
+
+	helpers.Respond(c, 200, model.Id, nil)
 }
