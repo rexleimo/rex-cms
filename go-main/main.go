@@ -9,6 +9,7 @@ import (
 func main() {
 	r := gin.Default()
 	helpers.GetDbInstance()
+	helpers.GetAuthInstance()
 	routes.RegisterRoutes(r)
 	r.Run()
 }

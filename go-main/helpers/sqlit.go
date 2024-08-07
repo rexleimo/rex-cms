@@ -10,17 +10,17 @@ import (
 )
 
 var (
-	instance *SqliteHelpers
-	once     sync.Once
+	sqliteInstance *SqliteHelpers
+	sqlOnce        sync.Once
 )
 
 func GetDbInstance() *SqliteHelpers {
-	once.Do(func() {
-		instance = &SqliteHelpers{}
-		instance.New()
-		instance.GetDb().AutoMigrate(&models.Image{})
+	sqlOnce.Do(func() {
+		sqliteInstance = &SqliteHelpers{}
+		sqliteInstance.New()
+		sqliteInstance.GetDb().AutoMigrate(&models.Image{})
 	})
-	return instance
+	return sqliteInstance
 }
 
 type SqliteHelpers struct {

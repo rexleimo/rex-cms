@@ -3,6 +3,7 @@ package routes
 import (
 	"github.com/gin-gonic/gin"
 	"rexai.com/controllers"
+	"rexai.com/middlewares"
 )
 
 type ImagePage struct {
@@ -13,9 +14,9 @@ func (page *ImagePage) New(r *gin.Engine) {
 	group := r.Group("/image")
 	{
 		group.GET("", imageC.List)
-		group.POST("", imageC.Create)
 		group.GET("/:id", imageC.Show)
-		group.PUT("/:id", imageC.Update)
-		group.DELETE("/:id", imageC.Delete)
+		group.POST("", middlewares.AdminMiddleWare(), imageC.Create)
+		group.PUT("/:id", middlewares.AdminMiddleWare(), imageC.Update)
+		group.DELETE("/:id", middlewares.AdminMiddleWare(), imageC.Delete)
 	}
 }
