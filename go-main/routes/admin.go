@@ -12,6 +12,6 @@ func (page *AdminPage) New(r *gin.Engine) {
 	adminC := controllers.AdminController{}
 	group := r.Group("/admin")
 	{
-		group.GET("/auth/login", adminC.Login)
+		group.POST("/auth/login", adminC.Login)
 	}
 }
