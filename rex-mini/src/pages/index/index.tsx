@@ -12,7 +12,7 @@ function ImageViewPort({ src }) {
     <View className='flex relative justify-center items-center rounded-md border border-solid border-gray-200'>
       <Image src={src} className='w-full rounded-md' />
       <View className='absolute box-border bottom-0 left-0 w-full bg-black/50 text-white p-1 text-[12px] rounded-md rounded-t-none'>
-        <View className='text-center'>下载</View>
+        <View className='text-center'>下载 0</View>
       </View>
     </View>
   )
