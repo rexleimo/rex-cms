@@ -22,7 +22,7 @@ export default function Index() {
   return (
     <View className='container'>
       <View className='p-3'>
-        <View className='grid gap-3 grid-cols-2'>
+        <View className='grid gap-3 grid-cols-3'>
           {
             imageList.map((src) => <ImageViewPort key={src} src={src} />)
           }
