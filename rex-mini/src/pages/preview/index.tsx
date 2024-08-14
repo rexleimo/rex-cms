@@ -7,7 +7,7 @@ export default function Index() {
   });
 
   return (
-    <View className='container'>
+    <View className='container mx-auto'>
       <View className='p-2'>
 
       </View>
