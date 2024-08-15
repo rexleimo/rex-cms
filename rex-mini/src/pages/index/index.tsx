@@ -1,5 +1,5 @@
 import { View, Image } from "@tarojs/components";
-import { useLoad } from "@tarojs/taro";
+import Taro, { useLoad } from "@tarojs/taro";
 
 const imageList = [
   "https://img0.baidu.com/it/u=1306108541,3890683509&fm=253&app=120&size=w931&n=0&f=JPEG&fmt=auto?sec=1723741200&t=9f34b107d0b6fdfacdcd27b974e7df0a",
@@ -8,8 +8,16 @@ const imageList = [
 ]
 
 function ImageViewPort({ src }) {
+
+
+  const toPreview = () => {
+    Taro.navigateTo({
+      url: `/pages/preview/index?src=${window.encodeURIComponent(src)}`
+    })
+  }
+
   return (
-    <View className='flex relative justify-center items-center rounded-md border border-solid border-gray-200'>
+    <View onClick={toPreview} className='flex relative justify-center items-center rounded-md border border-solid border-gray-200'>
       <Image src={src} className='w-full rounded-md' />
       <View className='absolute box-border bottom-0 left-0 w-full bg-black/50 text-white p-1 text-[12px] rounded-md rounded-t-none'>
         <View className='text-center'>下载 0</View>
