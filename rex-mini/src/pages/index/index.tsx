@@ -1,14 +1,10 @@
+import { API } from "@/api";
 import { View, Image } from "@tarojs/components";
 import Taro, { useLoad } from "@tarojs/taro";
+import { useState } from "react";
 
-const imageList = [
-  "https://img0.baidu.com/it/u=1306108541,3890683509&fm=253&app=120&size=w931&n=0&f=JPEG&fmt=auto?sec=1723741200&t=9f34b107d0b6fdfacdcd27b974e7df0a",
-  "https://img2.baidu.com/it/u=1490602810,3032519025&fm=253&app=138&size=w931&n=0&f=JPEG&fmt=auto?sec=1723741200&t=1fdebbc149e1a04430fc781ab6a50bfa",
-  "https://raw.githubusercontent.com/rexleimo/rex-imgs/main/2024-08-08/1723048947119839900.jpg",
-]
 
 function ImageViewPort({ src }) {
-
 
   const toPreview = () => {
     Taro.navigateTo({
@@ -27,8 +23,10 @@ function ImageViewPort({ src }) {
 }
 
 export default function Index() {
+  const [imageList, setImageList] = useState([]);
   useLoad(() => {
     console.log("Page loaded.");
+    API.get("/");
   });
 
   return (
